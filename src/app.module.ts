@@ -1,17 +1,15 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { BlogModule } from './blog/blog.module';
+import { BlogsModule } from './blogs/blogs.module';
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://jogeykristen:<password>@cluster0.dpdcq5r.mongodb.net/',
-    ),
-    BlogModule,
+    MongooseModule.forRoot(process.env.MONGO_URI, { dbName: 'blog' }),
+    ConfigModule.forRoot(),
+    BlogsModule,
+    AuthModule,
   ],
-  // controllers: [AppController],
-  // providers: [AppService],
 })
 export class AppModule {}
